@@ -1,0 +1,30 @@
+:host{
+    display: block;
+    overflow: hidden;
+    height: max-content;
+    width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 0.75rem rgba(0, 0, 0, 0.3);
+    transition: transform 200ms ease-in-out;
+}
+
+:host:hover{
+    transform: scale(1.03);
+}
+
+img{
+    cursor: pointer;
+    transition: transform 500ms ease-in;
+    height: 300px;
+}
+
+img:hover{
+    transform: scale(1.05);
+}
+
+.grid-view .description,
+.grid-view .title {
+    height: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

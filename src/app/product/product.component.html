@@ -1,0 +1,107 @@
+<div class="grid-view" *ngIf="view === 'grid'">
+    <div class="card text-center" >
+        <div class="card-header fw-bold fs-5 text-success">
+            {{product.nombreProducto}}
+        </div>
+    
+        <div class="overflow-hidden d-flex justify-content-center align-items-center">
+            <img src="{{product.imagenUrl}}" alt="" class="card-img-top" appOpenProductDetails [idProducto]="product.idProductos">
+        </div>
+    
+        <div class="card-body">
+            <h6 class="card-subtittle my-2 text-primary">{{product.stock}} productos disponibles</h6>
+            <p class="card-text description">
+                {{product.descripcion}}
+            </p>
+        </div>
+    
+        <div class="card-body">
+            <h5 class="card-tittle text-success">Precio
+                <span class="text-primary">{{product.precio}} C$</span>
+            </h5>
+        </div>
+    
+        <div class="card-footer d-grid gap-2">
+            <button class="btn btn-outline-success" type="button" [disabled]="product.stock === 0 || !utilityService.isLoggedIn()"
+            (click)="this.utilityService.addToCart(product)">
+                Añadir a carrito
+                <span *ngIf="!utilityService.isLoggedIn()">(Inicia sesion)</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="list-view" *ngIf="view === 'list'">
+    <div class="card">
+        <div class="row g-0">
+            <div class="col-md-4 overflow-hidden d-flex justify-content-center align-items-center">
+                <img src="../../../assets/img/HP-Victus-16.webp" class="img-fluid rounded-start" alt="Product Image">
+            </div>
+            <div class="col d-flex flex-column">
+                <div class="card-header text-center">
+                    Header
+                </div>
+
+                <div class="card-body">
+                    <h5>Tittle</h5>
+                    <p class="card-text description">
+                        HP Victus 15, con procesador 12th Gen Intel(R) Core(TM) i5-12450H,
+                        RAM de 16GB, disco ssd de 1TB, Targeta grafica Nvidia RTX 3050 de 4 GB
+                    </p>
+                    <h6 class="card-subtittle mb-3 text-primary">12 productos disponibles</h6>
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-tittle text-success">Precio
+                        <span class="text-primary">30,550 C$</span>
+                    </h5>
+                </div>
+
+                <div class="card-footer d-grid gap-2">
+                    <button class="btn btn-outline-success" type="button">Añadir a carrito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!--Current cart view-->
+<div class="cart-item-view" *ngIf="view === 'currcartitem'">
+    <div class="card">
+        <div class="row g-0">
+            <div class="card-header fw-bold fs-5 text-success">
+                {{product.nombreProducto}}
+            </div>
+            <div class="col-4 overflow-hidden d-flex justify-content-center align-items-center">
+                <img src="{{product.imagenUrl}}" alt="img" class="img-fluid rounded-start" 
+                appOpenProductDetails [idProducto]="product.idProductos">
+            </div>
+            <div class="col-8">
+                <div class="card-body">
+                    <h5 class="card-title title">{{product.nombreProducto}}</h5>
+                    <h5 class="card-title text-success">Price</h5>
+                    <span class="text-primary">{{product.precio}} C$</span>
+                </div>
+                <div>
+                    
+                </div>
+                <div class="card-footer text-muted d-grid gap-2">
+                    <button class="btn btn-outline-danger" type="button">Remove from cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Current cart view-->
+<div class="cart-item-view" *ngIf="view === 'prevcartitem'">
+    <div class="card text-center">
+        <div class="overflow-hidden d-flex justify-content-center align-items-center">
+            <img src="{{product.imagenUrl}}" alt="" class="card-img-top" appOpenProductDetails [idProducto]="product.idProductos">
+        </div>
+        <div class="card-body">
+            <h5 class="card-title title">{{product.nombreProducto}}</h5>
+        </div>
+    </div>
+</div>

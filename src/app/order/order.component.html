@@ -1,0 +1,103 @@
+<div class="my-container mx-auto">
+    <section class="m-3 p-4 border border-dark my-rounded-corner">
+        <h4 class="w-25 border border-secondary text-center py-2 my-rounded-corner">Payment info</h4>
+        <table class="table w-50 mx-auto table-bordered table-hover my-shadow">
+            <tbody>
+                <tr>
+                    <td>Total productos</td>
+                    <td class="fs-5 fw-bold">{{cart.productos.length}}</td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td class="fs-5 fw-bold text-success">{{pago.Total}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="m-3 p-4 border border-dark my-rounded-corner">
+        <h4 class="w-25 border border-secondary text-center py-2 my-rounded-corner">Payment Method</h4>
+        <div class="d-flex justify-content-center align-items-center">
+            <h5 class="me-4">Select any method</h5>
+            <select class="form-select w-25" [formControl]="selectedPaymentMethod" required>
+                <option value="0">Open this select menu</option>
+                <option *ngFor="let paymentMethod of metodoPago, let i = index" [value]="paymentMethod.id">{{paymentMethod.nombre}}</option>
+            </select>
+        </div>
+    </section>
+
+    <section class="m-3 p-4 border border-dark my-rounded-corner">
+        <form [formGroup]="formPay">
+            <h4 class="w-25 border border-secondary text-center py-2 my-rounded-corner">Proceed to payments</h4>
+            <div class="mt-4 mb-3" *ngIf="selectedPaymentMethodName !== ''">
+                <div class="row">
+                    <div class="col mb-3">
+                        <label for="UserName" class="form-label">Titular</label>
+                        <input type="text" class="form-control" id="titular" formControlName="titular">
+
+                        <!--Errors-->
+                        <div class="form-text text-danger" *ngIf="Titular.errors?.['required'] && (Titular.dirty || Titular.touched)">
+                            Debe ingresar el Titular de la tarjeta
+                        </div>
+                        <!--EndErrors-->
+                    </div>
+                    <div class="col">
+                        <label for="UserName" class="form-label">Numero Tarjeta</label>
+                        <input type="text" class="form-control" id="numeroTarjeta" formControlName="numeroTarjeta">
+
+                        <!--Errors-->
+                        <div class="form-text text-danger" *ngIf="NumeroTarjeta.errors?.['required'] && (NumeroTarjeta.dirty || NumeroTarjeta.touched)">
+                            Debe ingresar el numero de tarjeta
+                        </div>
+                        <div class="form-text text-danger"
+                            *ngIf="!!NumeroTarjeta.errors?.['minlength'] || NumeroTarjeta.errors?.['maxlength'] && (NumeroTarjeta.dirty || NumeroTarjeta.touched)">
+                            Numero de tarjeta invalida
+                        </div>
+                        <!--EndErrors-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <label for="UserName" class="form-label">CVV</label>
+                        <input type="text" class="form-control" id="CVV" formControlName="CVV">
+
+                        <!--Errors-->
+                        <div class="form-text text-danger" *ngIf="CVV.errors?.['required'] && (CVV.dirty || CVV.touched)">
+                            Debe ingresar el CVV
+                        </div>
+                        <div class="form-text text-danger"
+                            *ngIf="!!CVV.errors?.['minlength'] || CVV.errors?.['maxlength'] && (CVV.dirty || CVV.touched)">
+                            Numero de tarjeta invalida
+                        </div>
+                        <!--EndErrors-->
+                    </div>
+                    <div class="col-10">
+                        <label for="UserName" class="form-label">Direccion</label>
+                        <input type="text" class="form-control" id="direccion" formControlName="direccion">
+
+                        <!--Errors-->
+                        <div class="form-text text-danger" *ngIf="Direccion.errors?.['required'] && (Direccion.dirty || Direccion.touched)">
+                            Debe ingresar el CVV
+                        </div>
+                        <!--EndErrors-->
+                    </div>  
+                </div>
+                
+                <div class="d-flex w-100 justify-content-center align-items-center mt-3">
+                    <button type="button" class="btn btn-outline-success mb-4" [disabled]="formPay.invalid" (click)="EjecutarCompra()">Pay</button>
+                </div>
+
+                <div class="processing col-4">
+                    <div class="spinner-border me-4" role="status" *ngIf="displaySpinner">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <h6 class="m-0 {{classname}}">{{message}}</h6>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <div *ngIf="!false" class="pt-4">
+        <h2>You have not logged in</h2>
+    </div>
+</div>

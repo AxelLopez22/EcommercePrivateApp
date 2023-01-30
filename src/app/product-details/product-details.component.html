@@ -1,0 +1,98 @@
+<div class="my-container mx-auto border border-dark">
+    <div class="row g-0">
+        <!--Imagenes de productos-->
+        <div class="col-4 p-4">
+            <div class="d-flex justify-content-center align-items-center">
+                <img src="{{product.imagenUrl}}" alt="" class="w-100">
+            </div>
+
+            <div class="image-thumbnails mt-4 d-flex justify-content-between align-items-center">
+                <img src="../../assets/img/mobiles/10/1.jpg" alt="Thumbnail Image" (click)="imageIndex = 1">
+                <img src="../../assets/img/mobiles/10/2.jpg" alt="Thumbnail Image" (click)="imageIndex = 2">
+                <img src="../../assets/img/mobiles/10/3.jpg" alt="Thumbnail Image" (click)="imageIndex = 3">
+                <img src="../../assets/img/mobiles/10/4.jpg" alt="Thumbnail Image" (click)="imageIndex = 4">
+                <img src="../../assets/img/mobiles/10/5.jpg" alt="Thumbnail Image" (click)="imageIndex = 5">
+            </div>
+        </div>
+
+        <!--Detalle de productos-->
+        <div class="col-8 p-4">
+            <div class="card">
+                <div class="card-header">
+                    <h2>{{product.nombreProducto | titlecase}}</h2>
+                </div>
+
+                <div class="card-body">
+                    <h1 class="card-title text-success">Precio
+                    </h1>
+                    <h4 class="card-subtitle text-primary">{{product.precio}} C$</h4>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-subtitle my-2 text-primary">{{product.stock}} Productos disponibles</h6>
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-outline-success" [disabled]="product.stock === 0 || !utilityService.isLoggedIn()"
+                        (click)="this.utilityService.addToCart(product)">
+                            Añadir a carrito
+                            <span *ngIf="!utilityService.isLoggedIn()">(Inicia sesion)</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-text">Description</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-action" *ngFor="let item of product.descripcion.split(',')">
+                            {{item}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Suggested productos-->
+    <div class="row g-0">
+        <div class="col-12 ps-5 pt-4 pb-3">
+            <h3 class="border border-secondary text-center py-2 my-rounded-corner w-25">Related</h3>
+        </div>
+        <div class="col-12">
+            <app-suggested-products [category]="{id:product.idCategoria ,'category' :product.nombreCategoria}"></app-suggested-products>
+        </div> 
+    </div>
+
+    <!--Review-->
+    <div class="row g-0 my-5">
+        <!--User Reviews-->
+        <div class="col p-3">
+            <h3>Give your review</h3>
+            <h5 class="mt-4">Write your review</h5>
+            <textarea class="w-75 p-2" [formControl]="reviewControl"></textarea>
+            <div class="d-flex align-items-start">
+                <button class="btn btn-outline-secondary mt-4 me-5" type="button" (click)="submitReview()">Save Review</button>
+                <div>
+                    <h6 class="text-danger mt-4" *ngIf="!utilityService.isLoggedIn()">Debe estar registrado para comentar</h6>
+                    <h6 class="text-danger" *ngIf="showError">No puede estar el comentario vacio!</h6>
+                    <h6 class="text-success" *ngIf="reviewSaved">Comentario creado!</h6>
+                </div>
+            </div>
+        </div>
+        
+        <!--other Reviews-->
+        <div class="col p-3">
+            <h3>Other reviews</h3>
+            <h6 *ngIf="1">No reviews yet!</h6>
+            <div class="card mt-3" *ngFor="let review of [1,2,3]">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="card-text">
+                        Axel López
+                    </div>
+                    <div class="card-text fst-italic">
+                        Reviewed On: <span class="fw-bold">{{"10 Dec 2022" | date:"dd-MMM-yyyy"}}</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">Review</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
